@@ -99,11 +99,55 @@
 
 ![image](https://github.com/user-attachments/assets/183382d0-cb1b-441d-b3c5-adc3d6efeeb3)
 
-## Финальные настройки и проверка
+## Финальные настройки
 Снова возвращаемся в раздел CDN выбираем созданный ресурс CDN, в разделе общие переходим к пункту SSL переводим в положение включить пункт Поддержка HTTPS нажимаем кнопку Получить SSL-сертификат ожидаем получения сертификата и сохраняем изменения:
 
 ![image](https://github.com/user-attachments/assets/3fdc8162-6797-4283-8c3c-44437f5acaca)
 
 ![image](https://github.com/user-attachments/assets/ba8ed2cc-5aea-4f17-a9e0-1486c28fa30c)
 
-Проверяем соединение в используемых вами прокси-клиентах:
+## Подключаемся к вашему экземпляру vpnbot через CDN
+![image](https://github.com/user-attachments/assets/e0558b3e-810b-411b-a55d-87c22e9d9e7e)
+**Данный метод не актуален кнопок импорта подписок (import subscrube)**
+
+Как это сделать?
+
+### Изменение домена подключения и sni в ссылке vless
+Скопировать ссылку вида vless:// и изменить в ней хост подключения и sni (домен вашего экземпляра vpnbot) изменить на домен вашего ресурса CDN Gcore
+
+Было:
+
+vless://UUID@**domain_vpnbot**:443?flow=&path=%2Fws&security=tls&sni=**domain_vpnbot**&fp=chrome&type=ws#gcorecdn
+
+Станет:
+
+vless://UUID@**domain_cdnGcore**:443?flow=&path=%2Fws&security=tls&sni=**domain_cdnGcore**&fp=chrome&type=ws#gcorecdn
+
+### Добавления ключа cdn к ссылке вашей конфигурации
+Вы можете взять ссылку конфигурации v2ray(xray) или sing-box и добавить к ней ключ cdn=domain_cdnGcore с указанием домена вашего ресурса CDN Gcore, данное изменение выглядит данным образом:
+
+Было:
+
+https://domain_vpnbot/pac?h=HOST&t=s&s=UUID
+
+https://domain_vpnbot/pac?h=HOST&t=si&s=UUID
+
+Станет:
+
+https://domain_vpnbot/pac?h=HOST&t=s&s=UUID&cdn=domain_cdnGcore
+
+https://domain_vpnbot/pac?h=HOST&t=si&s=UUID&cdn=domain_cdnGcore
+
+### Изменение ссылки у sing-box windows service
+
+Скачиваем по ссылке sing-box windows: windows service вашу конфигурации sing-box для Windows.
+
+Распакуйте данный архив в требуемые папку. Например C:/VPN
+
+Перейдите в данную папку и откройте файл winsw3.xml в режиме изменения.
+
+В разделе download from измените ссылку ссылки формата https://domain_vpnbot...
+
+На ссылку sing-box config c добавленным ключом cdn по примеру выше
+
+https://domain_vpnbot/pac?h=HOST&t=si&s=UUID&cdn=domain_cdnGcore
