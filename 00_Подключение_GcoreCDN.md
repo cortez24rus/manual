@@ -17,7 +17,7 @@
 Переходим на [портал Gcore](https://auth.gcore.com/login/signup) и выполняем регистрацию на бесплатном тарифе.
 ## Создание поддомена для CDN Gcore
 Перед настройкой CDN
-Вам требуется создать A запись для вашего поддомена (**не должно совпадать с поддоменами вашего vpnbot**, а так-же можно использовать вообще другой домен) c привязкой к вашему ip адресу VPS
+Вам требуется создать A запись для вашего поддомена (**не должно совпадать с поддоменами вашего tproxy**, а так-же можно использовать вообще другой домен) c привязкой к вашему ip адресу VPS
 
 ![image](https://github.com/user-attachments/assets/9e9af618-ccc4-490d-93ba-4c1e6f2101d4)
 ## Настройка CDN
@@ -60,7 +60,7 @@
 
 ![image](https://github.com/user-attachments/assets/3a65467b-e714-479b-afec-8cfd2f6b1ae6)
 
-В открывшемся окне в разделе Источник контента укажите корневой домен вашего экземпляра vpnbot (без np oc или clientID adguard) и нажмите кнопку Сохранить изменения
+В открывшемся окне в разделе Источник контента укажите корневой домен вашего экземпляра tproxy (без np oc или clientID adguard) и нажмите кнопку Сохранить изменения
 
 ![image](https://github.com/user-attachments/assets/c460e939-1880-4382-926a-579f050d7a3f)
 
@@ -111,18 +111,18 @@
 
 ![image](https://github.com/user-attachments/assets/ba8ed2cc-5aea-4f17-a9e0-1486c28fa30c)
 
-## Подключаемся к вашему экземпляру vpnbot через CDN
+## Подключаемся к вашему экземпляру tproxy через CDN
 ![image](https://github.com/user-attachments/assets/e0558b3e-810b-411b-a55d-87c22e9d9e7e)
 **Данный метод не актуален кнопок импорта подписок (import subscrube)**
 
 Как это сделать?
 
 ### Изменение домена подключения и sni в ссылке vless
-Скопировать ссылку вида vless:// и изменить в ней хост подключения и sni (домен вашего экземпляра vpnbot) изменить на домен вашего ресурса CDN Gcore
+Скопировать ссылку вида vless:// и изменить в ней хост подключения и sni (домен вашего экземпляра tproxy) изменить на домен вашего ресурса CDN Gcore
 
 Было:
 
-vless://UUID@**domain_vpnbot**:443?flow=&path=%2Fws&security=tls&sni=**domain_vpnbot**&fp=chrome&type=ws#gcorecdn
+vless://UUID@**domain_tproxy**:443?flow=&path=%2Fws&security=tls&sni=**domain_tproxy**&fp=chrome&type=ws#gcorecdn
 
 Станет:
 
@@ -133,15 +133,15 @@ vless://UUID@**domain_cdnGcore**:443?flow=&path=%2Fws&security=tls&sni=**domain_
 
 Было:
 
-https://domain_vpnbot/pac?h=HOST&t=s&s=UUID
+https://domain_tproxy/pac?h=HOST&t=s&s=UUID
 
-https://domain_vpnbot/pac?h=HOST&t=si&s=UUID
+https://domain_tproxy/pac?h=HOST&t=si&s=UUID
 
 Станет:
 
-https://domain_vpnbot/pac?h=HOST&t=s&s=UUID&cdn=domain_cdnGcore
+https://domain_tproxy/pac?h=HOST&t=s&s=UUID&cdn=domain_cdnGcore
 
-https://domain_vpnbot/pac?h=HOST&t=si&s=UUID&cdn=domain_cdnGcore
+https://domain_tproxy/pac?h=HOST&t=si&s=UUID&cdn=domain_cdnGcore
 
 ### Изменение ссылки у sing-box windows service
 
@@ -151,8 +151,8 @@ https://domain_vpnbot/pac?h=HOST&t=si&s=UUID&cdn=domain_cdnGcore
 
 Перейдите в данную папку и откройте файл winsw3.xml в режиме изменения.
 
-В разделе download from измените ссылку ссылки формата https://domain_vpnbot...
+В разделе download from измените ссылку ссылки формата https://domain_tproxy...
 
 На ссылку sing-box config c добавленным ключом cdn по примеру выше
 
-https://domain_vpnbot/pac?h=HOST&t=si&s=UUID&cdn=domain_cdnGcore
+https://domain_tproxy/pac?h=HOST&t=si&s=UUID&cdn=domain_cdnGcore
